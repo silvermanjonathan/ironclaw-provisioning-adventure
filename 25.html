@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page 25 — Value Date</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+<div class="runhead"><span>Value Date</span><span>Choose Your Own Provisioning</span></div>
+<div class="pageno">25</div>
+
+<div data-if="3=wW">
+<p>A message arrives from an outside review team. They want to pull reports straight from Bursar, and they want it now.</p>
+<p>You check your ledger. Bursar is already open to the internet. There is nothing left to decide.</p>
+<p class="choices"><a class="choice" data-turn href="28.html"><span class="pg">Turn to page 28.</span></a></p>
+</div>
+<div data-if="!3=wW">
+<p>A message arrives from an outside review team. They want to pull reports straight from Bursar, and they want it now. The message uses the word "standard."</p>
+<p>To give them what they want, you would have to open Bursar to the outside. To refuse, you must tell someone important "no" this week.</p>
+<div class="choices">
+<a class="choice" data-turn href="27.html">If you hold the line and send the reports your own way, <span class="pg">Turn to page 27.</span></a>
+<a class="choice" data-turn href="26.html">If you think about opening the window, <span class="pg">Turn to page 26.</span></a>
+</div>
+</div>
+
+<noscript><p>This adventure needs JavaScript to carry your ledger from page to page.</p></noscript>
+<details class="ledger"><summary>Your Provisioning Ledger (so far)</summary><div id="ledger"></div></details>
+</div>
+<script src="engine.js"></script>
+</body>
+</html>

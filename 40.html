@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page 40 — Value Date</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+<div class="runhead"><span>Value Date</span><span>Choose Your Own Provisioning</span></div>
+<div class="pageno">40</div>
+
+<p>It is Thursday, 8:47 in the morning. A document arrives from Aldergate Fulfilment, one of your real business partners. It is one attachment among forty. Bursar picks it up, the way it picks everything up.</p>
+<p>This book will not show you what is inside the document. Your systems will not show you either. That is not what inboxes do. Only one thing matters: it came in through the front door, and reading it is Bursar's job.</p>
+<p>What happens now depends on every choice you have made.</p>
+<div class="choices">
+<div data-if="9=t"><a class="choice" data-turn href="41.html">Your ledger says the channel is TUNED. Watch it. <span class="pg">Turn to page 41.</span></a></div>
+<div data-if="9=m"><a class="choice" data-turn href="42.html">Your ledger says the channel is MUTED. The morning rolls on. <span class="pg">Turn to page 42.</span></a></div>
+<div data-if="9=-"><p><em>Your ledger is blank here. Go back to page 37 and choose.</em></p><a class="choice" data-turn href="37.html">Return to the channel, <span class="pg">Turn to page 37.</span></a></div>
+</div>
+
+<noscript><p>This adventure needs JavaScript to carry your ledger from page to page.</p></noscript>
+<details class="ledger"><summary>Your Provisioning Ledger (so far)</summary><div id="ledger"></div></details>
+</div>
+<script src="engine.js"></script>
+</body>
+</html>

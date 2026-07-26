@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page 42 — Value Date</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+<div class="runhead"><span>Value Date</span><span>Choose Your Own Provisioning</span></div>
+<div class="pageno">42</div>
+
+<p>At 9:03, nothing happens — nothing that you can see. The channel is silent, because you silenced it. The morning rolls on.</p>
+<div data-if="5=v&6=t&4=ra&7=cl&3=pt">
+<p>Nothing arrives all day. No call. No email. Nothing at all.</p>
+<p>Is that good news? There is only one way to find out.</p>
+<p class="choices"><a class="choice" data-turn href="52.html"><span class="pg">Turn to page 52.</span></a></p>
+</div>
+<div data-if="!5=v&6=t&4=ra&7=cl&3=pt">
+<p>Then, in the middle of the morning, the phone rings. Someone outside the building knows something you do not.</p>
+<p class="choices"><a class="choice" data-turn href="43.html"><span class="pg">Turn to page 43.</span></a></p>
+</div>
+
+<noscript><p>This adventure needs JavaScript to carry your ledger from page to page.</p></noscript>
+<details class="ledger"><summary>Your Provisioning Ledger (so far)</summary><div id="ledger"></div></details>
+</div>
+<script src="engine.js"></script>
+</body>
+</html>
