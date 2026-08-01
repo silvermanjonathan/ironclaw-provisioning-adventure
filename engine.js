@@ -1,7 +1,7 @@
 
 /* Value Date — page engine. Carries your ledger in the address bar (?s=...). */
 var VD = (function(){
-  function clean(s){ return (/^[A-Za-z-]{11}$/.test(s||"")) ? s : "-----------"; }
+  function clean(s){ s=s||""; if(/^[A-Za-z-]{11}$/.test(s)) s+="--"; return (/^[A-Za-z-]{13}$/.test(s)) ? s : "-------------"; }
   function C(s,i){ return s.charAt(i-1); }
   function inSet(ch,set){ return set.indexOf(ch) >= 0; }
   function evalCond(s,str){
@@ -19,9 +19,12 @@ var VD = (function(){
     spec.split(";").forEach(function(p){ var kv=p.split(":"); a[+kv[0]-1]=kv[1]; });
     return a.join("");
   }
-  function complete(s){ return s.slice(0,9).indexOf("-")===-1; }
+  var DECIDE=[1,2,3,4,5,6,7,8,9,12,13];
+  function complete(s){ return DECIDE.every(function(i){ return C(s,i)!=="-"; }); }
   function resolveEnding(s){
     if(inSet(C(s,3),"wW")) return 46;
+    if(C(s,12)==="o") return 62;
+    if(C(s,13)==="d") return 63;
     if(C(s,5)==="u" && C(s,4)==="u") return 47;
     if(inSet(C(s,1),"ef") && C(s,2)==="x" && (C(s,5)==="u"||C(s,6)==="y")) return 48;
     if(C(s,7)==="n") return 49;
@@ -39,6 +42,8 @@ var VD = (function(){
       case 50: var d=[8]; if(C(s,5)!=="v")d.push(5); if(C(s,6)!=="t")d.push(6); return d;
       case 51: var e=[]; if(C(s,5)!=="v")e.push(5); if(C(s,6)!=="t")e.push(6); if(C(s,4)==="u")e.push(4); return e;
       case 52: return [9];
+      case 62: return [12];
+      case 63: return [13];
       default: return [];
     }
   }
@@ -51,7 +56,9 @@ var VD = (function(){
     6:{label:"The rates tool may talk to", page:18, val:{t:"two websites only", s:"its own long list, unread", y:"any website"}},
     7:{label:"Limits on payments", page:32, val:{c:"all three limits", l:"speed limit only", n:"none"}},
     8:{label:"Customer records", page:22, val:{s:"one case at a time", a:"all ten years, searchable"}},
-    9:{label:"The audit channel", page:37, val:{t:"tuned and on", m:"muted"}}
+    9:{label:"The audit channel", page:37, val:{t:"tuned and on", m:"muted"}},
+    12:{label:"Who may speak to Bursar", page:55, val:{p:"paired phones only", l:"a short list you wrote", o:"anyone with the handle"}},
+    13:{label:"The update", page:59, val:{u:"applied Wednesday night", d:"deferred until after quarter-end"}}
   };
   function bookedAt(i,s){ return (i===3 && C(s,3)==="W") ? 26 : ROW[i].page; }
   var HOLDS = [
@@ -67,32 +74,33 @@ var VD = (function(){
     [7,"c","the ceilings existed, and one of them was a spend cap"],
     [7,"l","the rate limit existed; the spend cap did not"],
     [8,"s","memory search ended at the dispute prefix"],
-    [9,"t","you saw the morning while it was still morning"]
+    [9,"t","you saw the morning while it was still morning"],
+    [12,"p","every voice that could give Bursar work had shaken hands with the desk"],
+    [12,"l","the list of voices was short, and you wrote it"],
+    [13,"u","Wednesday's build was the fixed build"]
   ];
   var GUIDE = {
-    1:{a:"keys",         t:"Secrets at rest"},
-    2:{a:"sandbox",      t:"Execution isolation"},
-    3:{a:"inbound",      t:"Inbound exposure"},
-    4:{a:"key-scope",    t:"Credential scope"},
-    5:{a:"skill-trust",  t:"Skill trust"},
-    6:{a:"allowlist",    t:"Network allowlisting"},
-    7:{a:"limits",       t:"Guardrails and ceilings"},
-    8:{a:"memory-scope", t:"Memory scope"},
-    9:{a:"audit",        t:"Observability"}
+    1:{a:"keys",         l:"where the keys should have lived"},
+    2:{a:"sandbox",      l:"what the sandbox is for"},
+    3:{a:"inbound",      l:"why open doors get found"},
+    4:{a:"key-scope",    l:"what a money key should be allowed to do"},
+    5:{a:"skill-trust",  l:"what installing unread really grants"},
+    6:{a:"allowlist",    l:"why a tool needs a short list"},
+    7:{a:"limits",       l:"why every routine needs ceilings"},
+    8:{a:"memory-scope", l:"how much memory one task should see"},
+    9:{a:"audit",        l:"what the alarms would have told you"},
+    12:{a:"principals",  l:"who may speak to an agent"},
+    13:{a:"updates",     l:"why the fix must be running"}
   };
   function suggest(s,end){
     var causal=causalRows(end,s), h="";
     if(causal.length){
       var seen={}, rows=causal.filter(function(i){ if(seen[i]) return false; seen[i]=true; return true; });
-      h+="<h3>Before you choose again</h3>";
-      h+="<p>This ending was not luck. It has a "+(rows.length>1?"few names":"name")+", and the Builder's Guide teaches "+(rows.length>1?"them":"it")+".</p>";
       rows.forEach(function(i){
-        h+='<a class="choice" href="builders.html?s='+s+'#'+GUIDE[i].a+'">'+GUIDE[i].t+' — the decision you booked on page '+bookedAt(i,s)+'. <span class="pg">Open the Builder\'s Guide.</span></a>';
+        h+='<a class="choice" href="builders.html?s='+s+'#'+GUIDE[i].a+'">If you want to learn '+GUIDE[i].l+', <span class="pg">turn to page 54.</span></a>';
       });
     } else {
-      h+="<h3>After a Thursday like that</h3>";
-      h+="<p>Every wall held, and it held because you built it. The nine choices you just made are real ones, and the wizard that asks them is real too.</p>";
-      h+='<a class="choice" href="https://docs.ironclaw.com/quickstart" target="_blank" rel="noopener">Build one for real — install IronClaw and answer the nine questions for your own Thursday. <span class="pg">Open Getting Started.</span></a>';
+      h+='<a class="choice" href="https://docs.ironclaw.com/quickstart" target="_blank" rel="noopener">If you are ready to build a real one, <span class="pg">open the IronClaw quickstart.</span></a>';
     }
     return h;
   }
@@ -134,11 +142,12 @@ var VD = (function(){
     return h+"</div>";
   }
   function ledgerTable(s){
-    var h="<table>";
-    for(var i=1;i<=9;i++){
+    var h="<table>", n=0;
+    DECIDE.forEach(function(i){
+      n++;
       var ch=C(s,i), v=(ch==="-")?"—":(ROW[i].val[ch]+" (page "+bookedAt(i,s)+")");
-      h+="<tr><td>"+i+". "+ROW[i].label+"</td><td>"+v+"</td></tr>";
-    }
+      h+="<tr><td>"+n+". "+ROW[i].label+"</td><td>"+v+"</td></tr>";
+    });
     return h+"</table>";
   }
   function init(){
@@ -150,7 +159,7 @@ var VD = (function(){
     if(role==="reckon"){
       var box=document.getElementById("verdict");
       if(!complete(s)){
-        var miss=[]; for(var i=1;i<=9;i++) if(C(s,i)==="-") miss.push(i);
+        var miss=DECIDE.filter(function(i){ return C(s,i)==="-"; });
         box.innerHTML="Your ledger has empty lines. A promise you never made cannot come due. Go back to page "
           + miss.map(function(i){ return '<a data-turn href="'+String(ROW[i].page).padStart(2,"0")+'.html">'+ROW[i].page+"</a>"; }).join(", page ")
           + " and choose.";
@@ -168,7 +177,7 @@ var VD = (function(){
       var endNo=+document.body.getAttribute("data-ending");
       var t=document.getElementById("tone"); if(t) t.innerHTML=tone(s,endNo);
       var r=document.getElementById("readback"); if(r) r.innerHTML=readback(s,endNo);
-      var g=document.getElementById("suggest"); if(g){ g.className="suggest"; g.innerHTML=suggest(s,endNo); }
+      var g=document.getElementById("suggest"); if(g) g.innerHTML=suggest(s,endNo);
     }
     var led=document.getElementById("ledger"); if(led) led.innerHTML=ledgerTable(s);
     document.querySelectorAll("a[data-turn]").forEach(function(a){

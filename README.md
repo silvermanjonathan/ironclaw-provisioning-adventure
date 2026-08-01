@@ -2,13 +2,13 @@
 
 **A Choose-Your-Own-Provisioning gamebook about setting up an IronClaw-style AI agent on a payments desk.**
 
-You are the operator at Quillon, a company that moves money for other companies. Today you switch on Bursar, an agent that will work the settlement desk. Nine configuration decisions, one ordinary Thursday, eight endings — and the ending is a pure function of your choices, not of luck.
+You are the operator at Quillon, a company that moves money for other companies. Today you switch on Bursar, an agent that will work the settlement desk. Eleven configuration decisions, one ordinary Thursday, ten endings — and the ending is a pure function of your choices, not of luck.
 
 **[▶ Start the adventure](https://silvermanjonathan.github.io/ironclaw-provisioning-adventure/)** — or open `index.html` locally.
 
 ## What this is
 
-Training fiction for the people who provision agents. Each of the nine decisions maps to a real IronClaw configuration choice:
+Training fiction for the people who provision agents. Each of the eleven decisions maps to a real IronClaw configuration choice:
 
 | Page | Decision | IronClaw mechanism |
 |---|---|---|
@@ -18,9 +18,11 @@ Training fiction for the people who provision agents. Each of the nine decisions
 | 13 | What the money key can do | Credential scope at the proxy boundary |
 | 18 | Websites the rates tool may reach | The tool's declared host allowlist |
 | 22 | Customer records in memory | Workspace memory scope |
+| 55 | Who may speak to Bursar | Channel `dm_policy` — pairing (default) / allowlist / open |
 | 28 | The community add-on | Skill trust — read / attenuated / trusted-unread |
 | 32 | Limits on payments | Routine guardrails (rate limit, ceilings, spend cap) |
 | 37 | The audit channel | Observability |
+| 59 | The update | Staying current — `ironclaw-update` |
 
 ## What this is not
 
@@ -37,8 +39,8 @@ Every safe choice is grounded in the IronClaw documentation — mostly verbatim 
 Static multi-page site — no build step, no dependencies, no data leaves the page.
 
 - `index.html` — cover and warning page
-- `builders.html` — the Builder's Guide (the docs-grounding map; every losing ending links straight to the concept that decided it)
-- `01.html` … `53.html` — the pages; `45.html` is the reckoning, `46`–`53` the endings
+- `builders.html` — the Builder's Guide, page 54 of the book (the docs-grounding map; every losing ending turns the reader to the section that decided it)
+- `01.html` … `63.html` — the pages; `45.html` is the reckoning, `46`–`53` and `62`–`63` the endings; `55`–`61` the two decisions added in the second printing
 - `engine.js` — carries the reader's ledger between pages in the URL (`?s=...`)
 - `style.css` — shared styling
 
