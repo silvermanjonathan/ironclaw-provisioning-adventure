@@ -30,14 +30,14 @@ That distinction is the point. As of this writing there is no independent public
 
 The book never names a product, port, path, hostname, or configuration flag, and never states what any defence layer caught or missed. It teaches the shape of the decision, not a recipe.
 
-Every safe choice is grounded in the IronClaw documentation — mostly verbatim recommendations, a few honest adaptations. The full page-by-page mapping, including which is which, is in [SOURCES.md](SOURCES.md), and readers get the short version in-book on [the builders' page](https://silvermanjonathan.github.io/ironclaw-provisioning-adventure/builders.html).
+Every safe choice is grounded in the IronClaw documentation — mostly verbatim recommendations, a few honest adaptations. The full page-by-page mapping, including which is which, is in [SOURCES.md](SOURCES.md). In-book, every ending routes the reader onward: an ending caused by a choice links to the section of [the Builder's Guide](https://silvermanjonathan.github.io/ironclaw-provisioning-adventure/builders.html) that teaches the concept behind that choice, and the one ending no choice caused links out to the IronClaw quickstart — if you can provision the fictional agent cleanly, go provision a real one.
 
 ## Structure
 
 Static multi-page site — no build step, no dependencies, no data leaves the page.
 
 - `index.html` — cover and warning page
-- `builders.html` — the note for builders (the docs-grounding map, linked from the cover)
+- `builders.html` — the Builder's Guide (the docs-grounding map; every losing ending links straight to the concept that decided it)
 - `01.html` … `53.html` — the pages; `45.html` is the reckoning, `46`–`53` the endings
 - `engine.js` — carries the reader's ledger between pages in the URL (`?s=...`)
 - `style.css` — shared styling

@@ -69,6 +69,33 @@ var VD = (function(){
     [8,"s","memory search ended at the dispute prefix"],
     [9,"t","you saw the morning while it was still morning"]
   ];
+  var GUIDE = {
+    1:{a:"keys",         t:"Secrets at rest"},
+    2:{a:"sandbox",      t:"Execution isolation"},
+    3:{a:"inbound",      t:"Inbound exposure"},
+    4:{a:"key-scope",    t:"Credential scope"},
+    5:{a:"skill-trust",  t:"Skill trust"},
+    6:{a:"allowlist",    t:"Network allowlisting"},
+    7:{a:"limits",       t:"Guardrails and ceilings"},
+    8:{a:"memory-scope", t:"Memory scope"},
+    9:{a:"audit",        t:"Observability"}
+  };
+  function suggest(s,end){
+    var causal=causalRows(end,s), h="";
+    if(causal.length){
+      var seen={}, rows=causal.filter(function(i){ if(seen[i]) return false; seen[i]=true; return true; });
+      h+="<h3>Before you choose again</h3>";
+      h+="<p>This ending was not luck. It has a "+(rows.length>1?"few names":"name")+", and the Builder's Guide teaches "+(rows.length>1?"them":"it")+".</p>";
+      rows.forEach(function(i){
+        h+='<a class="choice" href="builders.html?s='+s+'#'+GUIDE[i].a+'">'+GUIDE[i].t+' — the decision you booked on page '+bookedAt(i,s)+'. <span class="pg">Open the Builder\'s Guide.</span></a>';
+      });
+    } else {
+      h+="<h3>After a Thursday like that</h3>";
+      h+="<p>Every wall held, and it held because you built it. The nine choices you just made are real ones, and the wizard that asks them is real too.</p>";
+      h+='<a class="choice" href="https://docs.ironclaw.com/quickstart" target="_blank" rel="noopener">Build one for real — install IronClaw and answer the nine questions for your own Thursday. <span class="pg">Open Getting Started.</span></a>';
+    }
+    return h;
+  }
   function tone(s,end){
     if(end===52) return "";
     var e1=(end===53), out=[];
@@ -141,6 +168,7 @@ var VD = (function(){
       var endNo=+document.body.getAttribute("data-ending");
       var t=document.getElementById("tone"); if(t) t.innerHTML=tone(s,endNo);
       var r=document.getElementById("readback"); if(r) r.innerHTML=readback(s,endNo);
+      var g=document.getElementById("suggest"); if(g){ g.className="suggest"; g.innerHTML=suggest(s,endNo); }
     }
     var led=document.getElementById("ledger"); if(led) led.innerHTML=ledgerTable(s);
     document.querySelectorAll("a[data-turn]").forEach(function(a){
@@ -153,6 +181,6 @@ var VD = (function(){
   if(typeof document!=="undefined"){
     if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",init); else init();
   }
-  return {clean:clean, evalCond:evalCond, withSet:withSet, resolveEnding:resolveEnding, causalRows:causalRows, complete:complete};
+  return {clean:clean, evalCond:evalCond, withSet:withSet, resolveEnding:resolveEnding, causalRows:causalRows, complete:complete, GUIDE:GUIDE};
 })();
 if(typeof module!=="undefined") module.exports=VD;

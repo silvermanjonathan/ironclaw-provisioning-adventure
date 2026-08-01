@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Note for Builders — Value Date</title>
+<title>The Builder's Guide — Value Date</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -10,24 +10,78 @@
 <div class="runhead"><span>Value Date</span><span>Choose Your Own Provisioning</span></div>
 
 
-<h1 style="font-size:1.9rem;margin:.2rem 0 .3rem">A Note for Builders</h1>
-<p class="kicker" style="font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--soft);margin:0 0 1.2rem">Where the right answers come from</p>
-<p>This book is fiction, but its choices are not. Each of the nine decisions is a real IronClaw provisioning decision, and every safe answer is grounded in the IronClaw documentation &mdash; most as near-verbatim recommendations, three as documented principles the story dramatizes. Here is the honest map.</p>
-<table class="srcs">
-<tr><th>Page</th><th>Safe choice</th><th>Status</th><th>Documentation basis</th></tr>
-<tr><td>2</td><td>System keyring</td><td><span class="badge doc">Documented</span></td><td>Onboarding wizard, step 2: &ldquo;System keyring is recommended; use an environment variable on servers/containers without a keyring.&rdquo; The env-var option is the docs&rsquo; own fallback &mdash; which is why it tempts.</td></tr>
-<tr><td>6</td><td>Sandbox on</td><td><span class="badge doc">Documented</span></td><td>Docker sandboxing (wizard step 7): LLM-originated commands run with no credential access, limited filesystem reach, allowlisted network. &ldquo;Can be disabled&rdquo; is the pressure the story applies.</td></tr>
-<tr><td>9</td><td>Poll out, or one locked tunnel</td><td><span class="badge doc">Documented</span></td><td>Polling is the docs&rsquo; stated no-tunnel alternative; the gateway defaults to local-only (&ldquo;recommended&rdquo;); direct exposure is &ldquo;generally not recommended&rdquo;; public endpoints require auth and least privilege.</td></tr>
-<tr><td>13</td><td>Look-only, or a person presses the button</td><td><span class="badge adp">Adapted</span></td><td>The docs&rsquo; least-privilege principle applied to the processor-side key. IronClaw scopes where a secret may be sent; the read-only / prepare / unattended tiers are issued by the payment processor, not toggled in IronClaw.</td></tr>
-<tr><td>18</td><td>Trim the list to two websites</td><td><span class="badge doc">Documented</span></td><td>Tools declare <span class="mono" style="font-family:monospace">allowed_hosts</span>; anything else is rejected before the connection is made. &ldquo;Review capabilities.json before installing any WASM tool from an untrusted source.&rdquo;</td></tr>
-<tr><td>22</td><td>One case at a time</td><td><span class="badge adp">Adapted</span></td><td>Workspace prefix scoping is the documented mechanism (&ldquo;scopes which memory paths a component may touch&rdquo;); the per-dispute workflow built on it is invented practice.</td></tr>
-<tr><td>28</td><td>Read the code first, or reduced powers</td><td><span class="badge doc">Documented</span></td><td>Nearly verbatim: &ldquo;A skill in a trusted directory has the same tool access you do. Never place a skill file there without reading it first.&rdquo; Registry installs run attenuated, read-only &mdash; the broken demo is the documented fail-closed behavior.</td></tr>
-<tr><td>32</td><td>Set all three limits</td><td><span class="badge adp">Adapted</span></td><td>The guardrails block is documented &mdash; rate limit, call and token caps, timeouts, plus &ldquo;Always set rate_limit on webhook-triggered routines.&rdquo; The currency-denominated spend cap is invented: it is the ceiling this domain needs, and no dollar field ships today.</td></tr>
-<tr><td>37</td><td>Tune the channel</td><td><span class="badge doc">Documented</span></td><td>Real-time leak detection, the safety layer, and logging are documented; the severity-tuning evening dramatizes that class of work rather than naming a feature.</td></tr>
-</table>
-<p>Two more groundings: the &ldquo;two manuals disagree&rdquo; device is modeled on real, listed self-contradictions in the IronClaw docs &mdash; and every citation at the end of every ending is a real, public incident. What stays fiction is everything at Quillon: no IronClaw save or failure is depicted, because none is on the public record. Do not let a story &mdash; this one included &mdash; stand in for your own red-team.</p>
-<p>The full mapping with source URLs lives in <a href="https://github.com/silvermanjonathan/ironclaw-provisioning-adventure/blob/main/SOURCES.md">SOURCES.md</a>. Docs drift; verify against the live pages before relying on wording. That is, after all, the book&rsquo;s entire thesis.</p>
-<p class="backlink"><a class="choice" data-turn href="index.html">Close the note. <span class="pg">Return to the cover.</span></a></p>
+<h1 style="font-size:1.9rem;margin:.2rem 0 .3rem">The Builder's Guide</h1>
+<p class="kicker" style="font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--soft);margin:0 0 1.2rem">The nine concepts, and where the right answers come from</p>
+<p>This book is fiction, but its choices are not. Each of the nine decisions is a real IronClaw provisioning decision, and every safe answer is grounded in the IronClaw documentation — most as near-verbatim recommendations, three as documented principles the story dramatizes.</p>
+<p>If an ending sent you here, it sent you to the wall that failed. Each section below is one decision: the concept behind it, and the honest map of what is documented and what the story adapted.</p>
+
+<div class="gsec" id="keys">
+<h2>Where the keys live <span class="badge doc">Documented</span></h2>
+<p class="gmeta">The decision on page 2 · Secrets at rest</p>
+<p>A key stored where the work happens becomes part of every copy of the work — backups, old images, the move from March. The concept is separation: credentials live in a locked store, the work borrows them, and no file you could accidentally ship ever contains one. IronClaw's runtime makes the same point at the boundary: tools build unauthenticated requests, and the secret is attached at the network proxy — borrowed at the door, never held in the room.</p>
+<p><strong>The grounding:</strong> Onboarding wizard, step 2: "System keyring is recommended; use an environment variable on servers/containers without a keyring." The env-var option is the docs' own fallback — which is why it tempts.</p>
+</div>
+
+<div class="gsec" id="sandbox">
+<h2>The sandbox <span class="badge doc">Documented</span></h2>
+<p class="gmeta">The decision on page 6 · Execution isolation</p>
+<p>Everything a model runs should run inside walls: no credentials in reach, a small filesystem, a short list of places it may call. Isolation does not make bad output good; it makes bad output small — and small is the whole game.</p>
+<p><strong>The grounding:</strong> Docker sandboxing (wizard step 7): LLM-originated commands run with no credential access, limited filesystem reach, allowlisted network. "Can be disabled" is the pressure the story applies.</p>
+</div>
+
+<div class="gsec" id="inbound">
+<h2>How the feed arrives <span class="badge doc">Documented</span></h2>
+<p class="gmeta">The decision on page 9 · Inbound exposure</p>
+<p>Every inbound door is a place the entire internet can knock, and scanners do not aim — they sweep. The old boring ranking holds: no door at all (call out and poll), then one authenticated door, and an open listener never.</p>
+<p><strong>The grounding:</strong> Polling is the docs' stated no-tunnel alternative; the gateway defaults to local-only ("recommended"); direct exposure is "generally not recommended"; public endpoints require auth and least privilege.</p>
+</div>
+
+<div class="gsec" id="key-scope">
+<h2>What the money key can do <span class="badge adp">Adapted</span></h2>
+<p class="gmeta">The decision on page 13 · Credential scope</p>
+<p>A credential is not one thing; it is a bundle of verbs. Least privilege means issuing only the verbs the job needs — look, prepare, move — and keeping a person between "prepared" and "sent" wherever the verb is expensive.</p>
+<p><strong>The grounding:</strong> The docs' least-privilege principle applied to the processor-side key. IronClaw scopes where a secret may be sent; the read-only / prepare / unattended tiers are issued by the payment processor, not toggled in IronClaw.</p>
+</div>
+
+<div class="gsec" id="allowlist">
+<h2>The websites the rates tool may reach <span class="badge doc">Documented</span></h2>
+<p class="gmeta">The decision on page 18 · Network allowlisting</p>
+<p>A tool that may talk to anywhere can deliver anything to anywhere. An allowlist turns "anywhere" into a list — and the control is not the list existing, it is you having read it.</p>
+<p><strong>The grounding:</strong> Tools declare <span class="mono" style="font-family:monospace">allowed_hosts</span>; anything else is rejected before the connection is made. "Review capabilities.json before installing any WASM tool from an untrusted source."</p>
+</div>
+
+<div class="gsec" id="memory-scope">
+<h2>Customer records in memory <span class="badge adp">Adapted</span></h2>
+<p class="gmeta">The decision on page 22 · Memory scope</p>
+<p>What the agent can reach is what a bad morning can take. Scope is deciding in advance how much of the archive any one task may see; the ceiling on the worst day gets set on the quiet days.</p>
+<p><strong>The grounding:</strong> Workspace prefix scoping is the documented mechanism ("scopes which memory paths a component may touch"); the per-dispute workflow built on it is invented practice.</p>
+</div>
+
+<div class="gsec" id="skill-trust">
+<h2>The community add-on <span class="badge doc">Documented</span></h2>
+<p class="gmeta">The decision on page 28 · Skill trust</p>
+<p>Anything you install acts with whatever power you granted, whether or not you read it. Trust levels are the mechanism and reading is the discipline: reduced powers shrink the blast radius — they do not review the code.</p>
+<p><strong>The grounding:</strong> Nearly verbatim: "A skill in a trusted directory has the same tool access you do. Never place a skill file there without reading it first." Registry installs run attenuated, read-only — the broken demo is the documented fail-closed behavior.</p>
+</div>
+
+<div class="gsec" id="limits">
+<h2>Limits on payments <span class="badge adp">Adapted</span></h2>
+<p class="gmeta">The decision on page 32 · Guardrails and ceilings</p>
+<p>Some adversaries are just arithmetic: a routine with no ceiling repeats until a person notices, and the person is asleep. Guardrails are the promises that hold at 8:02 with nobody watching — rate, count, and, where money moves, a cap denominated in money.</p>
+<p><strong>The grounding:</strong> The guardrails block is documented — rate limit, call and token caps, timeouts, plus "Always set rate_limit on webhook-triggered routines." The currency-denominated spend cap is invented: it is the ceiling this domain needs, and no dollar field ships today.</p>
+</div>
+
+<div class="gsec" id="audit">
+<h2>The audit channel <span class="badge doc">Documented</span></h2>
+<p class="gmeta">The decision on page 37 · Observability</p>
+<p>"No alarms" means something only if you built the alarms. Observability is the difference between "nothing happened" and "nothing was seen" — and between answering "were we affected?" in an afternoon or in three weeks.</p>
+<p><strong>The grounding:</strong> Real-time leak detection, the safety layer, and logging are documented; the severity-tuning evening dramatizes that class of work rather than naming a feature.</p>
+</div>
+
+<p style="margin-top:1.6rem">Two more groundings: the "two manuals disagree" device is modeled on real, listed self-contradictions in the IronClaw docs — and every citation at the end of every ending is a real, public incident. What stays fiction is everything at Quillon: no IronClaw save or failure is depicted, because none is on the public record. Do not let a story — this one included — stand in for your own red-team.</p>
+<p>The full mapping with source URLs lives in <a href="https://github.com/silvermanjonathan/ironclaw-provisioning-adventure/blob/main/SOURCES.md">SOURCES.md</a>. Docs drift; verify against the live pages before relying on wording. That is, after all, the book's entire thesis.</p>
+<p class="backlink"><a class="choice" data-turn href="01.html">Take the lesson back to Thursday. <span class="pg">Play again from page 1.</span></a>
+<a class="choice" data-turn href="index.html">Close the guide. <span class="pg">Return to the cover.</span></a></p>
 
 <noscript><p>This adventure needs JavaScript to carry your ledger from page to page.</p></noscript>
 <details class="ledger"><summary>Your Provisioning Ledger (so far)</summary><div id="ledger"></div></details>
