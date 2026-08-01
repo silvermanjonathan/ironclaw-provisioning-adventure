@@ -3,14 +3,16 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ending: Fixed Last Month — Value Date</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body data-role="ending" data-ending="63">
 <div class="page">
 <div class="runhead"><span>Value Date</span><span>Choose Your Own Provisioning</span></div>
 <div class="pageno">63</div>
 
-<p>The Thursday document did its work through a bug with a name and a number — a bug that was fixed, upstream, weeks ago. The fix has been sitting in your own queue since the night you chose the freeze. It would have cost ninety seconds.</p>
+<p data-if="3!t">The Thursday document did its work through a bug with a name and a number — a bug that was fixed, upstream, weeks ago.</p>
+<p data-if="3=t">At 4:51 in the morning, the door's own software let the night in. The bug it carried had a name and a number, and it was fixed, upstream, weeks ago.</p>
+<p>The fix has been sitting in your own queue since the night you chose the freeze. It would have cost ninety seconds.</p>
 <p>The incident report runs four pages, but its hardest sentence is a date comparison: <em>patched there, running here.</em></p>
 <p>Marisol asks the question everyone asks: "Was it something new? Something nobody had ever seen?" No. You were not beaten by something new. You were beaten by January.</p>
 <div id="tone"></div>
@@ -22,6 +24,6 @@
 <noscript><p>This adventure needs JavaScript to carry your ledger from page to page.</p></noscript>
 <details class="ledger"><summary>Your Provisioning Ledger (so far)</summary><div id="ledger"></div></details>
 </div>
-<script src="engine.js"></script>
+<script src="engine.js?v=3"></script>
 </body>
 </html>

@@ -4,6 +4,8 @@
 
 You are the operator at Quillon, a company that moves money for other companies. Today you switch on Bursar, an agent that will work the settlement desk. Eleven configuration decisions, one ordinary Thursday, ten endings — and the ending is a pure function of your choices, not of luck.
 
+Deaths keep book time, not story time: the reckless die within pages of the fatal choice (found by the scan, or by anyone with the handle), the merely hurried die in the small hours of page 64 before Thursday ever starts, and only the careful get the full Thursday, the response, and the reckoning. How deep you get into the book *is* the feedback. The single clean ending sits at the very bottom of it.
+
 **[▶ Start the adventure](https://silvermanjonathan.github.io/ironclaw-provisioning-adventure/)** — or open `index.html` locally.
 
 ## What this is
@@ -40,7 +42,7 @@ Static multi-page site — no build step, no dependencies, no data leaves the pa
 
 - `index.html` — cover and warning page
 - `builders.html` — the Builder's Guide, page 54 of the book (the docs-grounding map; every losing ending turns the reader to the section that decided it)
-- `01.html` … `63.html` — the pages; `45.html` is the reckoning, `46`–`53` and `62`–`63` the endings; `55`–`61` the two decisions added in the second printing
+- `01.html` … `64.html` — the pages; `64.html` is the night watch, `45.html` the reckoning, `46`–`53` and `62`–`63` the endings
 - `engine.js` — carries the reader's ledger between pages in the URL (`?s=...`)
 - `style.css` — shared styling
 

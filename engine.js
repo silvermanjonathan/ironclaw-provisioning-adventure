@@ -3,7 +3,7 @@
 var VD = (function(){
   function clean(s){ s=s||""; if(/^[A-Za-z-]{11}$/.test(s)) s+="--"; return (/^[A-Za-z-]{13}$/.test(s)) ? s : "-------------"; }
   function C(s,i){ return s.charAt(i-1); }
-  function inSet(ch,set){ return set.indexOf(ch) >= 0; }
+  function inSet(ch,set){ return !!ch && set.indexOf(ch) >= 0; }
   function evalCond(s,str){
     if(!str) return true;
     if(str.charAt(0)==="!") return !evalCond(s,str.slice(1));
@@ -104,6 +104,22 @@ var VD = (function(){
     }
     return h;
   }
+  function nightDest(s){
+    var end=resolveEnding(s);
+    if(end===47||end===49||end===46||end===62) return end;
+    if(end===63&&C(s,3)==="t") return end;
+    if(end===48&&C(s,5)==="u") return end;
+    return 40;
+  }
+  var NIGHTTEASE = {
+    47:"At seven minutes past two in the morning, money moves.",
+    48:"The phone rings at 11:52. It is the processor's fraud desk, which does not sleep.",
+    49:"At 8:02, a routine wakes up, and nothing you built tells it to stop.",
+    63:"At 4:51, something finds the door. The door's software is three weeks old.",
+    46:"This story ended days ago. You are only now finding out.",
+    62:"This story ended yesterday afternoon. You are only now finding out.",
+    40:"The night passes the way nights are supposed to. At 8:47, Thursday begins."
+  };
   function tone(s,end){
     if(end===52) return "";
     var e1=(end===53), out=[];
@@ -173,6 +189,13 @@ var VD = (function(){
         box.innerHTML='<a class="choice" data-turn href="'+end+'.html">Your first true line is marked above. <span class="pg">Turn to page '+end+'.</span></a>';
       }
     }
+    if(role==="nightgate"){
+      var nbox=document.getElementById("nightverdict");
+      if(nbox){
+        var nd=nightDest(s);
+        nbox.innerHTML='<a class="choice" data-turn href="'+String(nd).padStart(2,"0")+'.html">'+NIGHTTEASE[nd]+' <span class="pg">Turn to page '+nd+'.</span></a>';
+      }
+    }
     if(role==="ending"){
       var endNo=+document.body.getAttribute("data-ending");
       var t=document.getElementById("tone"); if(t) t.innerHTML=tone(s,endNo);
@@ -190,6 +213,6 @@ var VD = (function(){
   if(typeof document!=="undefined"){
     if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",init); else init();
   }
-  return {clean:clean, evalCond:evalCond, withSet:withSet, resolveEnding:resolveEnding, causalRows:causalRows, complete:complete, GUIDE:GUIDE};
+  return {clean:clean, evalCond:evalCond, withSet:withSet, resolveEnding:resolveEnding, causalRows:causalRows, complete:complete, GUIDE:GUIDE, nightDest:nightDest};
 })();
 if(typeof module!=="undefined") module.exports=VD;
