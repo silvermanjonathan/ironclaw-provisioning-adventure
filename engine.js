@@ -1,5 +1,5 @@
 
-/* Value Date — page engine. Carries your ledger in the address bar (?s=...). */
+/* Value Date — page engine. Carries the reader's place in the address bar (?s=...). */
 var VD = (function(){
   function clean(s){ s=s||""; if(/^[A-Za-z-]{11}$/.test(s)) s+="--"; return (/^[A-Za-z-]{13}$/.test(s)) ? s : "-------------"; }
   function C(s,i){ return s.charAt(i-1); }
@@ -61,24 +61,6 @@ var VD = (function(){
     13:{label:"The update", page:59, val:{u:"applied Wednesday night", d:"deferred until after quarter-end"}}
   };
   function bookedAt(i,s){ return (i===3 && C(s,3)==="W") ? 26 : ROW[i].page; }
-  var HOLDS = [
-    [2,"o","the sandbox stayed on — nothing the model ran saw a credential"],
-    [1,"k","the keys never sat in a file"],
-    [3,"p","no inbound path existed"],
-    [3,"t","inbound came through one authenticated door"],
-    [4,"r","the key could not move money"],
-    [4,"a","a person stood between every batch and the wire"],
-    [5,"v","you knew exactly what you had granted"],
-    [5,"d","the skill's reach stayed the reduced reach you chose"],
-    [6,"t","the rates tool reached two hosts and nothing else"],
-    [7,"c","the ceilings existed, and one of them was a spend cap"],
-    [7,"l","the rate limit existed; the spend cap did not"],
-    [8,"s","memory search ended at the dispute prefix"],
-    [9,"t","you saw the morning while it was still morning"],
-    [12,"p","every voice that could give Bursar work had shaken hands with the desk"],
-    [12,"l","the list of voices was short, and you wrote it"],
-    [13,"u","Wednesday's build was the fixed build"]
-  ];
   var GUIDE = {
     1:{a:"keys",         l:"where the keys should have lived"},
     2:{a:"sandbox",      l:"what the sandbox is for"},
@@ -138,34 +120,6 @@ var VD = (function(){
     if(c1) out.push(c1); if(c2) out.push(c2);
     return out.length ? "<p><em>What you did next:</em> "+out.join(" ")+"</p>" : "";
   }
-  function readback(s,end){
-    var causal=causalRows(end,s), h='<div class="readback"><h3>Your ledger, read back</h3>';
-    if(causal.length===0){
-      h+="<p>No single choice caused this ending. Look at your ledger. Every line is a wall that held.</p>";
-    } else {
-      h+="<p>This ending was decided when you chose:</p><ul>";
-      causal.forEach(function(i){
-        h+="<li><strong>Page "+bookedAt(i,s)+"</strong> — "+ROW[i].label.toLowerCase()+": "+ROW[i].val[C(s,i)]+".</li>";
-      });
-      h+="</ul>";
-    }
-    var holds=HOLDS.filter(function(x){ return C(s,x[0])===x[1] && causal.indexOf(x[0])<0; });
-    if(holds.length){
-      h+="<h3>What kept it this small</h3><ul>";
-      holds.forEach(function(x){ h+="<li>"+x[2]+" (page "+bookedAt(x[0],s)+")</li>"; });
-      h+="</ul>";
-    }
-    return h+"</div>";
-  }
-  function ledgerTable(s){
-    var h="<table>", n=0;
-    DECIDE.forEach(function(i){
-      n++;
-      var ch=C(s,i), v=(ch==="-")?"—":(ROW[i].val[ch]+" (page "+bookedAt(i,s)+")");
-      h+="<tr><td>"+n+". "+ROW[i].label+"</td><td>"+v+"</td></tr>";
-    });
-    return h+"</table>";
-  }
   function init(){
     var q=new URLSearchParams(location.search), s=clean(q.get("s"));
     document.querySelectorAll("[data-if]").forEach(function(el){
@@ -176,17 +130,12 @@ var VD = (function(){
       var box=document.getElementById("verdict");
       if(!complete(s)){
         var miss=DECIDE.filter(function(i){ return C(s,i)==="-"; });
-        box.innerHTML="Your ledger has empty lines. A promise you never made cannot come due. Go back to page "
+        box.innerHTML="Wednesday is not finished. A promise you never made cannot come due. Go back to page "
           + miss.map(function(i){ return '<a data-turn href="'+String(ROW[i].page).padStart(2,"0")+'.html">'+ROW[i].page+"</a>"; }).join(", page ")
           + " and choose.";
       } else {
-        var end=resolveEnding(s), first=true;
-        document.querySelectorAll(".q").forEach(function(el){
-          var hit=evalCond(s,el.getAttribute("data-cond"));
-          if(hit && first){ el.classList.add("yes"); first=false; }
-          else if(!first){ el.classList.add("dim"); }
-        });
-        box.innerHTML='<a class="choice" data-turn href="'+end+'.html">Your first true line is marked above. <span class="pg">Turn to page '+end+'.</span></a>';
+        var end=resolveEnding(s);
+        box.innerHTML='<a class="choice" data-turn href="'+end+'.html"><span class="pg">Turn to page '+end+'.</span></a>';
       }
     }
     if(role==="nightgate"){
@@ -199,10 +148,8 @@ var VD = (function(){
     if(role==="ending"){
       var endNo=+document.body.getAttribute("data-ending");
       var t=document.getElementById("tone"); if(t) t.innerHTML=tone(s,endNo);
-      var r=document.getElementById("readback"); if(r) r.innerHTML=readback(s,endNo);
       var g=document.getElementById("suggest"); if(g) g.innerHTML=suggest(s,endNo);
     }
-    var led=document.getElementById("ledger"); if(led) led.innerHTML=ledgerTable(s);
     document.querySelectorAll("a[data-turn]").forEach(function(a){
       var ns=s, set=a.getAttribute("data-set");
       if(set) ns=withSet(s,set);

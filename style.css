@@ -19,17 +19,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .warnbox h2{margin:.1rem 0 .8rem;letter-spacing:.12em}
 .cover h1{font-size:3rem;line-height:1;text-align:center;margin:.6rem 0 .2rem;letter-spacing:.02em}
 .cover .star{text-align:center;font-variant:small-caps;letter-spacing:.18em;color:var(--accent);margin-bottom:1.4rem}
-.readback{border:1px solid var(--rule);background:#fbf7ea;padding:1rem 1.2rem;margin:1.4em 0;font-size:.95rem}
-.readback h3{margin:.1rem 0 .6rem;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase}
-.readback ul{margin:.3rem 0;padding-left:1.1rem}
-.readback li{margin:.3em 0}
-.q{padding:.35em 0;border-bottom:1px dotted var(--rule)}
-.q.yes{background:#f3e6c8;font-weight:700;padding:.35em .4em}
-.q.dim{opacity:.45}
 #verdict{margin-top:1.2em;font-size:1.1rem;text-align:center}
-details.ledger{margin-top:2.2rem;font-size:.82rem;color:var(--soft)}
-details.ledger table{width:100%;border-collapse:collapse;margin-top:.5rem}
-details.ledger td{border-bottom:1px dotted var(--rule);padding:.25rem .2rem;vertical-align:top}
 .console{list-style:none;padding:1rem 1.2rem;margin:1.2em 0;background:#191c14;color:#cfe0c2;font-family:"Courier New",monospace;font-size:.8rem;line-height:1.9}
 .console li::before{content:"9:03 — ";color:#82a077}
 .center{text-align:center}
