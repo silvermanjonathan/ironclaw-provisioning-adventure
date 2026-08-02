@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Builder's Guide: Where the keys live — Value Date</title>
+<link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+<div class="page">
+<div class="runhead"><span>Value Date</span><span>Choose Your Own Provisioning</span></div>
+<div class="pageno">65</div>
+
+<div class="gsec">
+<h2>Where the keys live <span class="badge doc">Documented</span></h2>
+<p class="gmeta">The decision on page 2 · Secrets at rest</p>
+<p>A key stored where the work happens becomes part of every copy of the work — backups, old images, the move from March. The concept is separation: credentials live in a locked store, the work borrows them, and no file you could accidentally ship ever contains one. IronClaw's runtime makes the same point at the boundary: tools build unauthenticated requests, and the secret is attached at the network proxy — borrowed at the door, never held in the room.</p>
+<p><strong>The grounding:</strong> Onboarding wizard, step 2: "System keyring is recommended; use an environment variable on servers/containers without a keyring." The env-var option is the docs' own fallback — which is why it tempts.</p>
+<p><strong>The documentation:</strong> <a href="https://docs.ironclaw.com/onboard" target="_blank" rel="noopener">the onboarding wizard, step 2</a>.</p>
+</div>
+
+<div class="choices">
+<a class="choice" data-turn href="01.html">Take the lesson back to Thursday. <span class="pg">Play again from page 1.</span></a>
+<a class="choice" data-turn href="builders.html">See the other ten concepts. <span class="pg">Turn to page 54.</span></a>
+</div>
+
+<noscript><p>This adventure needs JavaScript to turn its pages.</p></noscript>
+</div>
+<script src="engine.js?v=6"></script>
+</body>
+</html>

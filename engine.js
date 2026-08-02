@@ -62,24 +62,24 @@ var VD = (function(){
   };
   function bookedAt(i,s){ return (i===3 && C(s,3)==="W") ? 26 : ROW[i].page; }
   var GUIDE = {
-    1:{a:"keys",         l:"where the keys should have lived"},
-    2:{a:"sandbox",      l:"what the sandbox is for"},
-    3:{a:"inbound",      l:"why open doors get found"},
-    4:{a:"key-scope",    l:"what a money key should be allowed to do"},
-    5:{a:"skill-trust",  l:"what installing unread really grants"},
-    6:{a:"allowlist",    l:"why a tool needs a short list"},
-    7:{a:"limits",       l:"why every routine needs ceilings"},
-    8:{a:"memory-scope", l:"how much memory one task should see"},
-    9:{a:"audit",        l:"what the alarms would have told you"},
-    12:{a:"principals",  l:"who may speak to an agent"},
-    13:{a:"updates",     l:"why the fix must be running"}
+    1:{a:"keys", p:65, l:"where the keys should have lived"},
+    2:{a:"sandbox", p:66, l:"what the sandbox is for"},
+    3:{a:"inbound", p:67, l:"why open doors get found"},
+    4:{a:"key-scope", p:68, l:"what a money key should be allowed to do"},
+    5:{a:"skill-trust", p:72, l:"what installing unread really grants"},
+    6:{a:"allowlist", p:69, l:"why a tool needs a short list"},
+    7:{a:"limits", p:73, l:"why every routine needs ceilings"},
+    8:{a:"memory-scope", p:70, l:"how much memory one task should see"},
+    9:{a:"audit", p:74, l:"what the alarms would have told you"},
+    12:{a:"principals", p:71, l:"who may speak to an agent"},
+    13:{a:"updates", p:75, l:"why the fix must be running"}
   };
   function suggest(s,end){
     var causal=causalRows(end,s), h="";
     if(causal.length){
       var seen={}, rows=causal.filter(function(i){ if(seen[i]) return false; seen[i]=true; return true; });
       rows.forEach(function(i){
-        h+='<a class="choice" href="builders.html?s='+s+'#'+GUIDE[i].a+'">If you want to learn '+GUIDE[i].l+', <span class="pg">turn to page 54.</span></a>';
+        h+='<a class="choice" href="'+GUIDE[i].p+'.html?s='+s+'">If you want to learn '+GUIDE[i].l+', <span class="pg">turn to page '+GUIDE[i].p+'.</span></a>';
       });
     } else {
       h+='<a class="choice" href="https://docs.ironclaw.com/quickstart" target="_blank" rel="noopener">If you are ready to build a real one, <span class="pg">open the IronClaw quickstart.</span></a>';
