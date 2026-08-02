@@ -34,17 +34,16 @@ Training fiction for the people who provision agents. Each of the eleven decisio
 
 That distinction is the point. As of this writing there is no independent public record of a field save by any platform shipping these mechanics — and no public record of a field failure either. A story that implied otherwise would be teaching readers to trust vendor claims, which is roughly how the Thursday in this book happens.
 
-The story pages never name a product, port, path, hostname, or configuration flag, and never state what any defence layer caught or missed. They teach the shape of the decision, not a recipe. Pages 54 and 65–75 — the Builder's Guide — are the exception by design: they are where the product names live, and every losing ending points into them.
+The story pages never name a product, port, path, hostname, or configuration flag, and never state what any defence layer caught or missed. They teach the shape of the decision, not a recipe. Pages 65–75 — the concept pages — are the exception by design: they are where the product names live, and every losing ending points to one.
 
-Every safe choice is grounded in the IronClaw documentation — mostly verbatim recommendations, a few honest adaptations. The full page-by-page mapping, including which is which, is in [SOURCES.md](SOURCES.md). In-book, every ending routes the reader onward: an ending caused by a choice turns the reader to the guide page (65–75) that teaches the concept behind that choice, and the one ending no choice caused links out to the IronClaw quickstart — if you can provision the fictional agent cleanly, go provision a real one.
+Every safe choice is grounded in the IronClaw documentation — mostly verbatim recommendations, a few honest adaptations. The full page-by-page mapping, including which is which, is in [SOURCES.md](SOURCES.md). In-book, every ending routes the reader onward: an ending caused by a choice turns the reader to the concept page (65–75) that teaches the decision behind that choice, and the one ending no choice caused links out to the IronClaw quickstart — if you can provision the fictional agent cleanly, go provision a real one.
 
 ## Structure
 
 Static multi-page site — no build step, no dependencies, no data leaves the page.
 
 - `index.html` — cover and warning page
-- `builders.html` — the Builder's Guide contents, page 54 of the book
-- `65.html` … `75.html` — the Builder's Guide, one page per concept, each ending in links to the IronClaw documentation that grounds it
+- `65.html` … `75.html` — the concept pages: one per decision, the wall that failed and the IronClaw documentation that grounds it
 - `01.html` … `64.html` — the pages; `64.html` is the night watch, `45.html` the reckoning, `46`–`53` and `62`–`63` the endings
 - `engine.js` — carries the reader's place between pages in the URL (`?s=...`), invisibly
 - `style.css` — shared styling
@@ -56,6 +55,6 @@ Edit any page's prose on its own without touching the rest. Three rules: page nu
 
 **Second printing — August 2026.** A register pass on the narrator: twenty-nine prose edits across the eight Thursday endings, ending 62, five body pages, and the engine's two epilogue tone lines, plus one typo (page 47's doubled percent sign). The editing rule, briefly: at most one pointed line per page, stated as an image, a clock, or a behavior — never an abstraction; characters may coin maxims, the narrator may not; and the narrator never promises that a sentence will matter later — the state machine already keeps that promise. Nothing behavioral moved: every link and condition is byte-identical to the first printing, and all 46,656 reachable states resolve to the same endings, the same causal rows, and the same night routes. The authors' map is unchanged because the link graph is. The engine pin moves to v=5, per the rule above.
 
-**Third printing — August 2026.** The Builder's Guide splits into eleven pages, 65–75, one per concept, each closing with links to the IronClaw documentation that grounds it; page 54 becomes the guide's contents, and the guide's introduction finally admits to eleven concepts rather than nine. Losing endings now turn the reader to the concept's own page. Story pages 1–64 change only their engine pin (now v=6); the story's link graph is unchanged, so the authors' map stands — regenerate it only if your generator walks the guide.
+**Third printing — August 2026.** The Builder's Guide is gone. In its place: eleven concept pages, 65–75, one per decision, each explaining the wall that failed and closing with links to the IronClaw documentation that grounds it. Losing endings turn the reader straight to the page for the row that caused them; the clean ending still links out to the quickstart. builders.html is deleted, and page 54 goes back to being the page this book does not have. Story pages 1–64 change only their engine pin (now v=7); the story's link graph is unchanged, so the authors' map stands.
 
 *One page in this book is reachable by no link at all. There is a way to reach it. Maybe you'll find it.*

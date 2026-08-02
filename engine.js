@@ -62,17 +62,17 @@ var VD = (function(){
   };
   function bookedAt(i,s){ return (i===3 && C(s,3)==="W") ? 26 : ROW[i].page; }
   var GUIDE = {
-    1:{a:"keys", p:65, l:"where the keys should have lived"},
-    2:{a:"sandbox", p:66, l:"what the sandbox is for"},
-    3:{a:"inbound", p:67, l:"why open doors get found"},
-    4:{a:"key-scope", p:68, l:"what a money key should be allowed to do"},
-    5:{a:"skill-trust", p:72, l:"what installing unread really grants"},
-    6:{a:"allowlist", p:69, l:"why a tool needs a short list"},
-    7:{a:"limits", p:73, l:"why every routine needs ceilings"},
-    8:{a:"memory-scope", p:70, l:"how much memory one task should see"},
-    9:{a:"audit", p:74, l:"what the alarms would have told you"},
-    12:{a:"principals", p:71, l:"who may speak to an agent"},
-    13:{a:"updates", p:75, l:"why the fix must be running"}
+    1:{p:65, l:"where the keys should have lived"},
+    2:{p:66, l:"what the sandbox is for"},
+    3:{p:67, l:"why open doors get found"},
+    4:{p:68, l:"what a money key should be allowed to do"},
+    5:{p:72, l:"what installing unread really grants"},
+    6:{p:69, l:"why a tool needs a short list"},
+    7:{p:73, l:"why every routine needs ceilings"},
+    8:{p:70, l:"how much memory one task should see"},
+    9:{p:74, l:"what the alarms would have told you"},
+    12:{p:71, l:"who may speak to an agent"},
+    13:{p:75, l:"why the fix must be running"}
   };
   function suggest(s,end){
     var causal=causalRows(end,s), h="";
