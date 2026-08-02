@@ -30,7 +30,7 @@ Training fiction for the people who provision agents. Each of the eleven decisio
 
 ## What this is not
 
-**No incident in this book happened.** Quillon, Bursar, and every character are invented, and no ending depicts a real event involving IronClaw or any other product. The story is *capability-grounded*: each mechanism is a credible answer to incidents that are documented and public, and the note printed at the end of every ending cites a real, verifiable case (EchoLeak / CVE-2025-32711, CVE-2025-6514, the Nx "s1ngularity" worm, the 1.5M-token exposure, the 135,000-instance scan, the runaway-loop cost case, and the patched-before-disclosure RCE, CVE-2026-25253).
+**No incident in this book happened.** Quillon, Bursar, and every character are invented, and no ending depicts a real event involving IronClaw or any other product. The story is *capability-grounded*: each mechanism is a credible answer to incidents that are documented and public, and the note printed at the end of every ending cites a real, verifiable case (EchoLeak / CVE-2025-32711, CVE-2025-6514, the Nx "s1ngularity" worm, the 1.5M-token exposure, the 135,000-instance scan, the runaway-loop cost case, and the patched-before-disclosure RCE, CVE-2026-25253). Every count and clock inside the story is fiction — the records tallied, the entries listed, the times on the phone calls. The only real numbers are the ones in the true notes.
 
 That distinction is the point. As of this writing there is no independent public record of a field save by any platform shipping these mechanics — and no public record of a field failure either. A story that implied otherwise would be teaching readers to trust vendor claims, which is roughly how the Thursday in this book happens.
 
@@ -50,5 +50,9 @@ Static multi-page site — no build step, no dependencies, no data leaves the pa
 - `authors-map.svg` — the current structure map, regenerated from the live link graph each printing
 
 Edit any page's prose on its own without touching the rest. Three rules: page numbers live in both the filename and the `href` of every link that points to it; choice links need `data-turn` on the `<a>` tag so the engine forwards the reader's place; and if `engine.js` and pages change together, bump the `?v=` pin on every page, so a cached engine can never meet a newer page. Pages 45 and 64 route by engine — their destinations are computed, not written.
+
+## Printing history
+
+**Second printing — August 2026.** A register pass on the narrator: twenty-nine prose edits across the eight Thursday endings, ending 62, five body pages, and the engine's two epilogue tone lines, plus one typo (page 47's doubled percent sign). The editing rule, briefly: at most one pointed line per page, stated as an image, a clock, or a behavior — never an abstraction; characters may coin maxims, the narrator may not; and the narrator never promises that a sentence will matter later — the state machine already keeps that promise. Nothing behavioral moved: every link and condition is byte-identical to the first printing, and all 46,656 reachable states resolve to the same endings, the same causal rows, and the same night routes. The authors' map is unchanged because the link graph is. The engine pin moves to v=5, per the rule above.
 
 *One page in this book is reachable by no link at all. There is a way to reach it. Maybe you'll find it.*
