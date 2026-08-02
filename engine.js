@@ -108,12 +108,12 @@ var VD = (function(){
     var c1={
       f: e1 ? "You froze forty-one honest payments for a thing the walls had already stopped. Marisol forgives you by Monday. Mostly."
             : "You froze the queue. Some people minded at the time. Nobody questions it afterwards.",
-      b: e1 ? "You let the batch in flight finish, and it finished clean. You got a little lucky, and you know exactly how much."
+      b: e1 ? "You let the batch in flight finish, and it finished clean. That was partly luck."
             : "You let the batch in flight finish. The report is kind about that call. At two in the morning, for a while, you are not.",
       r: "You shut off the key first. It made the morning loud — the processor called Theo before you could — but it was the hardest stop there was, and by Friday everyone says so."
     }[C(s,10)];
     var c2={
-      d:"You called the processor first, with numbers that later changed. The record holds both sets of numbers, and it is better for it.",
+      d:"You called the processor first, with numbers that later changed. The record holds both sets of numbers.",
       t:"You built the timeline first and called at noon with numbers that held. The processor noticed the two hours. So did you.",
       i:"Noor answered from her trip in nine minutes and ran the first hour by phone. The whole company spoke with one voice — a little late, but together."
     }[C(s,11)];
